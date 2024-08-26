@@ -1,10 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
 Future<List<dynamic>> fetchData() async {
   try {
-    final response = await http.get(Uri.parse('http://192.168.1.172:5001/data'));
+    final response = await http.get(Uri.parse('https://crud-backend-inky.vercel.app/api/v1/student'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

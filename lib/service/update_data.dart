@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 Future<void> updateItem(String id, Map<String, dynamic> updatedItem) async {
   final response = await http.put(
-    Uri.parse('http://192.168.1.172:5001/data/$id'),
+    Uri.parse('https://crud-backend-inky.vercel.app/api/v1/student/$id'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

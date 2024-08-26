@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 Future<void> addItem(String firstName, String lastName, String course, String year, bool enrolled) async {
   // Replace with your actual backend URL
   final response = await http.post(
-    Uri.parse('http://192.168.1.172:5001/data'),
+    Uri.parse('https://crud-backend-inky.vercel.app/api/v1/student'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
