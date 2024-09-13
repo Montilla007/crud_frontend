@@ -1,10 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 
-import '../service/create_data.dart';  // Import the create data functions
-import '../service/get_data.dart';  // Import the fetchData function
-import '../widgets/add_student_screen.dart';  // Import the AddStudentScreen
+import '../service/create_data.dart';
+import '../service/get_data.dart';
+import '../widgets/add_student_screen.dart';
 import '../widgets/detail_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -67,21 +65,33 @@ class _MainScreenState extends State<MainScreen> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final item = snapshot.data![index];
-                return ListTile(
-                  title: Text('${item['firstName']} ${item['lastName']}'),
-                  subtitle: Text('${item['course']} - ${item['year']}'),
-                  onTap: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(item: item),
-                      ),
-                    );
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  elevation: 4,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    title: Text('${item['firstName']} ${item['lastName']}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Course: ${item['course']}'),
+                        Text('Year: ${item['year']}'),
+                        Text('Enrolled: ${item['enrolled'] ? 'Yes' : 'No'}'),
+                      ],
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsScreen(item: item),
+                        ),
+                      );
 
-                    if (result == true || result is Map<String, dynamic>) {
-                      _refreshData();
-                    }
-                  },
+                      if (result == true || result is Map<String, dynamic>) {
+                        _refreshData();
+                      }
+                    },
+                  ),
                 );
               },
             );

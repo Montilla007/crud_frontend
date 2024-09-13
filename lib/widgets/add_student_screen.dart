@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddStudentScreen extends StatefulWidget {
   final Function(String, String, String, String, bool) onAddStudent;
 
-  AddStudentScreen({required this.onAddStudent});
+  const AddStudentScreen({super.key, required this.onAddStudent});
 
   @override
   _AddStudentScreenState createState() => _AddStudentScreenState();
@@ -19,53 +19,30 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Add New Student'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _firstNameController,
-            decoration: const InputDecoration(labelText: 'First Name'),
-          ),
-          TextField(
-            controller: _lastNameController,
-            decoration: const InputDecoration(labelText: 'Last Name'),
-          ),
-          TextField(
-            controller: _courseController,
-            decoration: const InputDecoration(labelText: 'Course'),
-          ),
-          DropdownButton<String>(
-            hint: const Text('Select Year'),
-            value: _selectedYear,
-            onChanged: (String? newValue) {
-              setState(() {
-                _selectedYear = newValue;
-              });
-            },
-            items: <String>[
-              'First Year',
-              'Second Year',
-              'Third Year',
-              'Fourth Year',
-              'Fifth Year'
-            ].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-          CheckboxListTile(
-            title: const Text('Enrolled'),
-            value: _isEnrolled,
-            onChanged: (bool? newValue) {
-              setState(() {
-                _isEnrolled = newValue ?? false;
-              });
-            },
-          ),
-        ],
+      title: const Text('Add New Student', style: TextStyle(fontWeight: FontWeight.bold)),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildTextField(_firstNameController, 'First Name'),
+            const SizedBox(height: 10),
+            _buildTextField(_lastNameController, 'Last Name'),
+            const SizedBox(height: 10),
+            _buildTextField(_courseController, 'Course'),
+            const SizedBox(height: 10),
+            _buildDropdown(),
+            const SizedBox(height: 10),
+            SwitchListTile(
+              title: const Text('Enrolled', style: TextStyle(fontWeight: FontWeight.w500)),
+              value: _isEnrolled,
+              onChanged: (bool newValue) {
+                setState(() {
+                  _isEnrolled = newValue;
+                });
+              },
+            ),
+          ],
+        ),
       ),
       actions: <Widget>[
         TextButton(
@@ -74,8 +51,8 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
             Navigator.of(context).pop();
           },
         ),
-        TextButton(
-          child: const Text('Add'),
+        ElevatedButton(
+          child: const Text('Add', style: TextStyle(fontWeight: FontWeight.bold)),
           onPressed: () {
             final String firstName = _firstNameController.text;
             final String lastName = _lastNameController.text;
@@ -86,11 +63,54 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                 course.isNotEmpty &&
                 _selectedYear != null) {
               widget.onAddStudent(firstName, lastName, course, _selectedYear!, _isEnrolled);
+              Navigator.of(context).pop();
             }
-            Navigator.of(context).pop();
           },
         ),
       ],
+    );
+  }
+
+  // Helper method to build TextFields with a border
+  Widget _buildTextField(TextEditingController controller, String label) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build DropdownButton with border
+  Widget _buildDropdown() {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        labelText: 'Select Year',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      value: _selectedYear,
+      onChanged: (String? newValue) {
+        setState(() {
+          _selectedYear = newValue;
+        });
+      },
+      items: <String>[
+        'First Year',
+        'Second Year',
+        'Third Year',
+        'Fourth Year',
+        'Fifth Year'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

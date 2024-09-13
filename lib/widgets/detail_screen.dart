@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 
 import '../service/delete_data.dart';
@@ -79,20 +77,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   _selectedYear = newValue;
                 });
               },
-              items: <String>['First Year', 'Second Year', 'Third Year', 'Fourth Year', 'Fifth Year']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'First Year',
+                'Second Year',
+                'Third Year',
+                'Fourth Year',
+                'Fifth Year'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
             ),
-            CheckboxListTile(
+            SwitchListTile(
               title: const Text('Enrolled'),
               value: _isEnrolled,
-              onChanged: (bool? newValue) {
+              onChanged: (bool newValue) {
                 setState(() {
-                  _isEnrolled = newValue ?? false;
+                  _isEnrolled = newValue;
                 });
               },
             ),
