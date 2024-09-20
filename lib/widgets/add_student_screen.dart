@@ -71,7 +71,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     );
   }
 
-  // Helper method to build TextFields with a border
   Widget _buildTextField(TextEditingController controller, String label) {
     return TextField(
       controller: controller,
@@ -84,7 +83,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     );
   }
 
-  // Helper method to build DropdownButton with border
   Widget _buildDropdown() {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(

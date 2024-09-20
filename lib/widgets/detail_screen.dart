@@ -39,12 +39,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
     };
 
     await updateItem(widget.item['_id'], updatedItem);
-    Navigator.of(context).pop(true);  // Return true to indicate the update was successful
+    Navigator.of(context).pop(true);  
   }
 
   void _deleteItem() async {
     await deleteItem(widget.item['_id']);
-    Navigator.of(context).pop(true);  // Return true to indicate the deletion was successful
+    Navigator.of(context).pop(true);  
   }
 
   @override
